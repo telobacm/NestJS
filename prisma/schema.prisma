@@ -11,11 +11,24 @@ datasource db {
 }
 
 model Article {
-  id          Int      @id @default(autoincrement())
-  title       String   @unique
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title       String  @unique
   description String?
   body        String
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  published   Boolean @default(false)
+}
+
+model Product {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String  @unique
+  description String?
+  price       Decimal
+  sku         String  @unique
+  published   Boolean @default(false)
 }

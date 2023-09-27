@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { products } from '../products';
 
 const prisma = new PrismaClient();
 
@@ -27,6 +28,12 @@ async function main() {
   });
 
   console.log({ post1, post2 });
+
+  for (const product of products) {
+    await prisma.product.create({
+      data: product,
+    });
+  }
 }
 
 main()

@@ -1,17 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsBoolean,
+  IsDecimal,
   IsOptional,
   IsString,
-  IsBoolean,
   MaxLength,
   MinLength,
 } from 'class-validator';
 
-export class CreateArticleDto {
+export class CreateProductDto {
   @IsString()
   @MinLength(5)
   @ApiProperty()
-  title: string;
+  name: string;
 
   @IsString()
   @IsOptional()
@@ -19,13 +20,16 @@ export class CreateArticleDto {
   @ApiProperty({ required: false })
   description?: string;
 
-  @IsString()
-  @MinLength(100)
+  @IsDecimal()
   @ApiProperty()
-  body: string;
+  price: number;
+
+  @IsString()
+  @ApiProperty()
+  sku: string;
 
   @IsBoolean()
   @IsOptional()
   @ApiProperty({ required: false })
-  published?: boolean = false;
+  published?: boolean;
 }
