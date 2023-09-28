@@ -47,7 +47,7 @@ export class ArticlesController {
     const article = await this.articlesService.findOne(+id);
 
     if (!article) {
-      return new NotFoundException(`Article with id: ${id} not found`);
+      return new NotFoundException(`Article with id: ${id} is not found`);
     }
     return article;
   }
