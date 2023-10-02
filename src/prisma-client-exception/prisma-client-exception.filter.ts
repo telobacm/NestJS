@@ -20,12 +20,10 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
       case 'P2002':
         // Split the error message into lines
         const lines = message.split('\n');
-
         // Find the line containing information about the conflict
         const conflictLine = lines.find((line) =>
           line.includes('Unique constraint failed on the fields:'),
         );
-
         // Extract the field(s) causing the conflict from that line
         const match = conflictLine?.match(
           /Unique constraint failed on the fields: (.+)/,
@@ -43,6 +41,7 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
           statusCode: HttpStatus.NOT_FOUND,
           message,
         });
+        console.log(message);
         break;
       default:
         super.catch(exception, host);

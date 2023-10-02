@@ -13,7 +13,6 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import {
-  ApiConflictResponse,
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiOkResponse,
@@ -30,7 +29,6 @@ export class ProductsController {
 
   @Post()
   @ApiCreatedResponse({ type: ProductEntity })
-  @ApiConflictResponse({ description: 'Conflict: Resource already exists' })
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
