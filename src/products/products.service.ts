@@ -11,11 +11,7 @@ export class ProductsService {
   }
 
   findAll() {
-    return this.prisma.product.findMany({
-      where: {
-        published: true,
-      },
-    });
+    return this.prisma.product.findMany({});
   }
 
   findOne(id: string) {

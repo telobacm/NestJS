@@ -12,7 +12,13 @@ import {
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiConflictResponse,
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ProductEntity } from './entities/product.entity';
 import { PrismaClientExceptionFilter } from 'src/prisma-client-exception/prisma-client-exception.filter';
 
@@ -24,18 +30,19 @@ export class ProductsController {
 
   @Post()
   @ApiCreatedResponse({ type: ProductEntity })
+  @ApiConflictResponse({ description: 'Conflict: Resource already exists' })
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
 
   @Get()
-  @ApiCreatedResponse({ type: ProductEntity, isArray: true })
+  @ApiOkResponse({ type: ProductEntity, isArray: true })
   findAll() {
     return this.productsService.findAll();
   }
 
   @Get(':id')
-  @ApiCreatedResponse({ type: ProductEntity })
+  @ApiOkResponse({ type: ProductEntity })
   async findOne(@Param('id') id: string) {
     const product = await this.productsService.findOne(id);
 
@@ -46,7 +53,7 @@ export class ProductsController {
   }
 
   @Patch(':id')
-  @ApiCreatedResponse({ type: ProductEntity })
+  @ApiOkResponse({ type: ProductEntity })
   async update(
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
@@ -55,7 +62,7 @@ export class ProductsController {
   }
 
   @Delete(':id')
-  @ApiCreatedResponse({ type: ProductEntity })
+  @ApiNoContentResponse({ type: ProductEntity })
   remove(@Param('id') id: string) {
     return this.productsService.remove(id);
   }
