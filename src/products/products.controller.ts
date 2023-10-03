@@ -35,14 +35,15 @@ export class ProductsController {
 
   @Get()
   @ApiOkResponse({ type: ProductEntity, isArray: true })
-  findAll() {
-    return this.productsService.findAll();
+  async findAll() {
+    const products = await this.productsService.findAll();
+    return products.map((product) => new ProductEntity(product));
   }
 
   @Get(':id')
   @ApiOkResponse({ type: ProductEntity })
   async findOne(@Param('id') id: string) {
-    const product = await this.productsService.findOne(id);
+    const product = new ProductEntity(await this.productsService.findOne(id));
 
     if (!product) {
       return new NotFoundException(`Product with id: ${id} is not found`);

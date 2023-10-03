@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Prisma, Product } from '@prisma/client';
+import { Transform } from 'class-transformer';
 
 export class ProductEntity implements Product {
   @ApiProperty()
@@ -17,7 +18,8 @@ export class ProductEntity implements Product {
   @ApiProperty({ required: false, nullable: true })
   description: string | null;
 
-  @ApiProperty()
+  @Transform(({ value }) => value.toNumber())
+  @ApiProperty({ type: Number })
   price: Prisma.Decimal;
 
   @ApiProperty()
@@ -25,4 +27,8 @@ export class ProductEntity implements Product {
 
   @ApiProperty({ default: false })
   published: boolean;
+
+  constructor(partial: Partial<ProductEntity>) {
+    Object.assign(this, partial);
+  }
 }

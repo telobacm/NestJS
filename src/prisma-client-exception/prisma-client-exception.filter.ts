@@ -18,13 +18,10 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
         });
         break;
       case 'P2002':
-        // Split the error message into lines
         const lines = message.split('\n');
-        // Find the line containing information about the conflict
         const conflictLine = lines.find((line) =>
           line.includes('Unique constraint failed on the fields:'),
         );
-        // Extract the field(s) causing the conflict from that line
         const match = conflictLine?.match(
           /Unique constraint failed on the fields: (.+)/,
         );

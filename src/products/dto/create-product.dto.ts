@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
-  IsDecimal,
   IsOptional,
   IsString,
   MaxLength,
+  Min,
   MinLength,
 } from 'class-validator';
 
@@ -20,11 +20,12 @@ export class CreateProductDto {
   @ApiProperty({ required: false })
   description?: string;
 
-  @IsDecimal()
+  @Min(1.0)
   @ApiProperty()
   price: number;
 
   @IsString()
+  @MinLength(5)
   @ApiProperty()
   sku: string;
 
